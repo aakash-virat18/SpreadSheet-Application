@@ -4,10 +4,10 @@ let defaultProperties = {
     "font-style": "",
     "text-decoration": "",
     "text-align": "left",
-    "ackground-color": "white",
-    "color": "black",
+    "background-color": "#ffffff",
+    "color": "#000000",
     "font-family": "Noto Sans",
-    "font-size":14
+    "font-size": "14px"
 }
 
 let cellData = {
@@ -114,6 +114,11 @@ $(document).ready(function () {
         let alignment = cellInfo["text-align"];
         $(".align-icon.selected").removeClass("selected");
         $(".icon-align-"+alignment).addClass("selected");
+        $(".background-color-picker").val(cellInfo["background-color"]);
+        $(".text-color-picker").val(cellInfo["color"]);
+        $(".font-family-selector").val(cellInfo["font-family"]);
+        $(".font-family-selector").css("font-family", cellInfo["font-family"]);
+        $(".font-size-selector").val(cellInfo["font-size"]);
     }
 
     $(".input-cell").dblclick(function(){
@@ -125,6 +130,7 @@ $(document).ready(function () {
 
     $(".input-cell").blur(function(){
         $(".input-cell.selected").attr("contenteditable","false");
+        updateCell("text", $(this).text());
     })
 
     $(".input-cell-container").scroll(function(){
@@ -216,4 +222,29 @@ $(".icon-align-justify").click(function(){
     if(!$(this).hasClass("selected")){
         updateCell("text-align","justify",false);
     }
+});
+
+$(".color-fill-icon").click(function(){
+    $(".background-color-picker").click();
+});
+
+$(".color-fill-text").click(function(){
+    $(".text-color-picker").click();
+});
+
+$(".background-color-picker").change(function(){
+    updateCell("background-color", $(this).val())
+});
+
+$(".text-color-picker").change(function(){
+    updateCell("color", $(this).val())
+});
+
+$(".font-family-selector").change(function() {
+    updateCell("font-family", $(this).val());
+    $(".font-family-selector").css("font-family", $(this).val());
+});
+
+$(".font-size-selector").change(function() {
+    updateCell("font-size", $(this).val());
 });
